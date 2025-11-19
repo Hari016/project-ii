@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Teacher;
+use App\Models\teacherProfile;
 
 class TeacherController extends Controller
 {
@@ -73,5 +74,20 @@ class TeacherController extends Controller
         $data = Teacher::findOrFail($id);
         $data->delete();
         return redirect()->route('teacher.index');
+    }
+      public function profile(string $id)
+    {
+        $data = Teacher::findorfail($id);
+        return view('teacher.profile', compact('data'));
+    }
+    public function profileupdate(Request $request)
+    {
+       $data = new teacherProfile();
+         $data->teacher_id = $request->teacher_id;
+         $data->organization_name = $request->organization_name;
+        $data->bio = $request->bio;
+        $data->post = $request->post;
+        $data->save();
+        return Redirect()->route('teacher.index');
     }
 }

@@ -12,4 +12,9 @@ class Student extends Model
     {
         return $this->hasOne(StudentProfile::class);
     }
+    
+    public function fees()
+    {
+        return $this->hasMany(StudentFee::class);
+    }
 }

@@ -25,7 +25,9 @@ Route::delete('delete/{id}', [StudentController::class, 'destroy'])->name('stude
 Route::get('student/edit/{id}', [StudentController::class, 'edit'])->name('students.edit');
 Route::get('student/profile/{id}', [StudentController::class, 'profile'])->name('students.profile');
 Route::put('student/profileupdate', [StudentController::class, 'profileupdate'])->name('students.profileupdate');
-
+Route::get('student/fees/{id}', [StudentController::class, 'fees'])->name('students.fees');
+Route::get('pay/fees/{id}', [StudentController::class, 'pay'])->name('pay.fees');
+Route::post('fees/store', [StudentController::class, 'feesStore'])->name('fees.store');
 
 
 Route::get('/teacher', [TeacherController::class, 'index'])->name('teacher.index');

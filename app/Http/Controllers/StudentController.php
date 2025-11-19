@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Student;
 use App\Models\StudentProfile;
+use App\Models\StudentFee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -110,4 +111,25 @@ class StudentController extends Controller
         $data->save();
         return Redirect()->route('student.index');
     }
+    public function fees(string $id)
+    {
+        $data = Student::with('fees')->findorfail($id);
+        return view('student.fees', compact('data'));
+    }
+    public function pay(string $id)
+    {
+        $data = Student::findorfail($id);
+        return view('student.pay', compact('data'));
+    }
+    public function feesStore(Request $request)
+    {
+        $data = new StudentFee();
+        $data->student_id = $request->student_id;      
+        $data->amount = $request->amount;
+        $data->date = $request->date;
+        $data->message = $request->message;
+        $data->save();
+        return Redirect()->route('student.index');
+    }
+
 }

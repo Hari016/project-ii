@@ -7,7 +7,6 @@
                 <div class="card">
                     <div class="card-header">{{ __('Student') }}
                     </div>
-
                     <div class="card-body">
                         <form action="{{ route('fees.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf

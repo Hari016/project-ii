@@ -17,4 +17,8 @@ class Student extends Model
     {
         return $this->hasMany(StudentFee::class);
     }
+      public function teacher()
+    {
+        return $this->belongsToMany(Teacher::class);
+    }
 }

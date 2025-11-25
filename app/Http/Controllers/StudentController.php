@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Student;
 use App\Models\StudentProfile;
 use App\Models\StudentFee;
+use App\Models\teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -15,6 +16,7 @@ class StudentController extends Controller
      */
     public function index()
     {
+        // dd("hello");  
         $student = Student::all();
         return view('student.index', compact('student'));
     }
@@ -60,11 +62,12 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        $student = Student::findorfail($id);
+        $student = Student::findOrFail($id);
         return view('student.edit', compact('student'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -97,15 +100,15 @@ class StudentController extends Controller
         $data->delete();
         return Redirect()->route('student.index');
     }
-     public function profile(string $id)
+    public function profile(string $id)
     {
         $data = Student::findorfail($id);
         return view('student.profile', compact('data'));
     }
     public function profileupdate(Request $request)
     {
-       $data = new StudentProfile();
-         $data->student_id = $request->student_id;
+        $data = new StudentProfile();
+        $data->student_id = $request->student_id;
         $data->bio = $request->bio;
         $data->class = $request->class;
         $data->save();
@@ -124,12 +127,25 @@ class StudentController extends Controller
     public function feesStore(Request $request)
     {
         $data = new StudentFee();
-        $data->student_id = $request->student_id;      
+        $data->student_id = $request->student_id;
         $data->amount = $request->amount;
         $data->date = $request->date;
         $data->message = $request->message;
         $data->save();
         return Redirect()->route('student.index');
     }
+    public function assignteacher($id)
+    {
+        $teachers = Teacher::all();
+        $data = Student::with('teacher')->findOrfail($id);
+        return view('student.assignteacher', compact('data', 'teachers'));
+    }
 
+    public function assignteacherstore(Request $request)
+    {
+        // dd($request->all());
+        $student = Student::findOrFail($request->student_id);
+        $student->teacher()->attach($request->teacher_id);
+        return back();
+    }
 }

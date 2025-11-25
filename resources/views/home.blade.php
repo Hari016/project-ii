@@ -16,7 +16,7 @@
     <div class="row g-4">
 
 <!-- Put this style block anywhere inside this Blade file (top or bottom) -->
-<style>
+<styl>
     .card-hover {
         transition: transform .2s, box-shadow .2s;
     }

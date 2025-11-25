@@ -12,4 +12,8 @@ class teacher extends Model
     {
         return $this->hasOne(teacherProfile::class);
     }
+     public function student()
+    {
+        return $this->belongsToMany(Student::class);
+    }
 }

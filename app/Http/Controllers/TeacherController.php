@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Models\Teacher;
 use App\Models\teacherProfile;
@@ -89,5 +90,19 @@ class TeacherController extends Controller
         $data->post = $request->post;
         $data->save();
         return Redirect()->route('teacher.index');
+    }
+     public function assignstudent($id)
+    {
+        $students = Student::all();
+        $data = Teacher::with('student')->findOrfail($id);
+        return view('teacher.assignstudents', compact('data', 'students'));
+    }
+
+    public function assignstudentstore(Request $request)
+    {
+        // dd($request->all());
+        $student = Student::findOrFail($request->student_id);
+        $student->teacher()->attach($request->teacher_id);
+        return back();
     }
 }
